@@ -31,3 +31,14 @@ def encoding_columns(X):
 	X = pca.fit_transform(X)
 
 ```
+- Studying the labels of client’s subscription for the product shows that the data given contains `37,000`
+instances with label **no** while a mere `6,000` instances with label **yes**. So, this clearly identifies that the
+data suffers from the infamous **class-imbalance problem**.
+- In order to cope with the class-imbalance problem, two measures have been taken:
+A. The data is first splitted into train and test sets in the ratio 75:25. **Synthetic Minority Over-sampling
+Technique (SMOTE)** is then applied on the so-formed train set to equalize the instances of positive _(“yes”)_
+and negative _(“no”)_ classes. **SMOTE** is applied independently to the train set after the split.
+
+B. Since, the test data still suffers from class-imbalance problem, using the traditional AUC-ROC score for
+evaluating the performance of the binary classifiers would not be sufficient. So, the weighted
+Precision-Recall-Fscore​ metric is used for evaluating the performance of the models.
