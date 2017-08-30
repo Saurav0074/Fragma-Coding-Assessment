@@ -39,6 +39,65 @@ data suffers from the infamous **class-imbalance problem**.
 Technique (SMOTE)** is then applied on the so-formed train set to equalize the instances of positive _(“yes”)_
 and negative _(“no”)_ classes. **SMOTE** is applied independently to the train set after the split.
 
-2. Since, the test data still suffers from class-imbalance problem, using the traditional AUC-ROC score for
+2. Since, the test data still suffers from class-imbalance problem, using the traditional **AUC-ROC score** for
 evaluating the performance of the binary classifiers would not be sufficient. So, the weighted
-Precision-Recall-Fscore​ metric is used for evaluating the performance of the models.
+**Precision-Recall-Fscore** metric is used for evaluating the performance of the models.
+
+## Model Selection
+- After naively experimenting with various binary classifiers, I found the following four giving the best F1
+scores (a combined measure of Precision and Recall scores): **Random Forest Classifier**, **Extra Trees
+Classifier**, **Gradient Boosting Classifier** and the **Support Vector Machine (SVM) based Classifier**.
+
+## Hyper-parameter Tuning
+- **Grid Search algorithm with cross-validation** was used to tune the parameters of the models selected.
+```
+############### Grid Search based parameter tuning ###################
+def tune_parameters(alg, X, y):
+	'''
+	# Parameter sets for Gradient Boosting Classifier
+	parameters = {'loss': ['deviance', 'exponential'],
+					'learning_rate': [0.1, 0.3, 0.5, 0.08],
+					'n_estimators': [100, 125, 150, 200],
+					'min_samples_split': [2, 3, 5],
+					'min_samples_leaf': [1, 5, 8]
+					}
+	
+	# Parameter sets for Random Forest and Extra Trees Classifier
+	parameters = {'n_estimators':[10, 12, 15, 20],
+				'max_features':['log2', 'sqrt', 'auto'],
+				'criterion': ['entropy', 'gini'], 
+				'max_depth':[2, 3, 5, 10],
+				'min_samples_split': [2, 3, 5],
+				'min_samples_leaf': [1,5,8]
+				}
+	'''
+	# Parameter sets for SVM
+	parameters = {'C':[0.6, 0.8, 1.0, 1.2, 1.4, 1.6]}
+
+	grid = GridSearchCV(alg, parameters, cv = 10, 
+						verbose = 0, scoring = 'f1_weighted')
+	grid.fit(X, y) # check the combination of parameters on train set
+
+	print("Best F1 score while running Grid Search:", grid.best_score_) # best score obtained
+	print("Best parameters found by Grid Search:\n", grid.best_params_) # parameters delivering the best score
+```
+- The code snippet below shows the hyperparameters selected for each algorithm:
+```
+	# algorithms with parameters obtained from Grid Search tuning
+	alg1 = ExtraTreesClassifier(max_depth=10, n_estimators=20, 
+								max_features='auto',
+								criterion='gini',
+								min_samples_split=2,
+								min_samples_leaf=1)
+	alg2 = RandomForestClassifier(max_depth=10, n_estimators=20, 
+								max_features='sqrt',
+								criterion='gini',
+								min_samples_split=2,
+								min_samples_leaf=1)
+	alg3 = GradientBoostingClassifier(loss='deviance', min_samples_split=2,
+								min_samples_leaf=5,
+								learning_rate=0.5,
+								n_estimators=200)
+	alg4 = SVC(C=1.2, probability=True)
+	
+```
