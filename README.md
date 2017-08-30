@@ -5,7 +5,10 @@
 
 [marketing-data.csv](https://github.com/Saurav0074/Fragma-Coding-Assessment/blob/master/marketing-data.csv) contains the data set of direct marketing campaigns of a banking institution. [main.py](https://github.com/Saurav0074/Fragma-Coding-Assessment/blob/master/main.py) contains the complete code.
 
-### Data Exploration
+## Compiling the code
+Simply running `python3 main.py` with the data downloaded into the same folder as that of the code shall do the job.
+
+## Data Exploration
 - Looking at the values of the columns, the first task needed to be carried was to convert the columns with
 non-numeric/string values into numeric ones. I used sklearn’s `LabelEncoder()` function for this. Below is an overview of the labelling function used:
 
@@ -19,7 +22,7 @@ def encoding_columns(X):
 	return X
 
 ```
-### Feature Engineering
+## Feature Engineering
 - The given data contains 16 attributes as feature sets and the last column as the output label. The features were first normalised using `MinMaxScaler()` to scale all of them down to 0-1 range for a better fit with the assumptions of the hyperparameters of the training algorithms. In order to remove any correlated features, **Principal Component Analysis (PCA)** was used which gave best results with a total of 14 best features, i.e., two of the features being highly correlated.
 ```
 	# Scale the features to 0-1 range
