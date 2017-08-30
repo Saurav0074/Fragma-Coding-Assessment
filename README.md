@@ -5,5 +5,6 @@
 
 [marketing-data.csv](https://github.com/Saurav0074/Fragma-Coding-Assessment/blob/master/marketing-data.csv) contains the data set of direct marketing campaigns of a banking institution. [main.py](https://github.com/Saurav0074/Fragma-Coding-Assessment/blob/master/main.py) contains the complete code.
 
-### Solution Approach:
-
+### Data Exploration
+- Looking at the values of the columns, the first task needed to be carried was to convert the columns with
+non-numeric/string values into numeric ones. I used sklearn’s `LabelEncoder()` function for this.
