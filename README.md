@@ -104,7 +104,11 @@ def tune_parameters(alg, X, y):
 	alg4 = SVC(C=1.2, probability=True)
 	
 ```
-### Ensembling of Models
+## Ensembling of Models
 - I used scikit-learn's `Voting Classifier()` to create a voting of the results of the above classifiers in order to observe any boost in the F1-scores. The accuracy reports of individual classifiers as well as the voting of the classifiers with respect to the positive class is shown below:
 
 ![Accuracy Results](voting.png)
+
+Please feel free to ask any queries regarding the approach/code.
+
+[Saurav Jha](www.linkedin.com/in/sauravonn)
