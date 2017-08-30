@@ -7,4 +7,15 @@
 
 ### Data Exploration
 - Looking at the values of the columns, the first task needed to be carried was to convert the columns with
-non-numeric/string values into numeric ones. I used sklearn’s `LabelEncoder()` function for this.
+non-numeric/string values into numeric ones. I used sklearn’s `LabelEncoder()` function for this. Below is an overview of the labelling function used:
+
+```
+# function to encode non-numeric values into set of numeric labels
+def encoding_columns(X):
+	encoder = LabelEncoder()
+	encoder.fit(X)
+	X = encoder.transform(X) # transform X based on distinct labels found
+	#print(format(Counter(X))) # print count of each label
+	return X
+
+```
