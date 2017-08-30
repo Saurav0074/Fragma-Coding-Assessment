@@ -19,3 +19,15 @@ def encoding_columns(X):
 	return X
 
 ```
+### Feature Engineering
+- The given data contains 16 attributes as feature sets and the last column as the output label. The features were first normalised using `MinMaxScaler()` to scale all of them down to 0-1 range for a better fit with the assumptions of the hyperparameters of the training algorithms. In order to remove any correlated features, **Principal Component Analysis (PCA)** was used which gave best results with a total of 14 best features, i.e., two of the features being highly correlated.
+```
+	# Scale the features to 0-1 range
+	scaler = MinMaxScaler()
+	X = scaler.fit_transform(X)
+
+	# Principal Component Analysis for find top 14 uncorrelated features
+	pca = PCA(n_components=14)
+	X = pca.fit_transform(X)
+
+```
